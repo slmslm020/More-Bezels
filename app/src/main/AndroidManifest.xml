@@ -1,14 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.morebezels">
 
     <application
-        <service android:name=".OverlayService" />
         android:allowBackup="true"
         android:icon="@android:drawable/sym_def_app_icon"
         android:label="More-Bezels"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
-        <activity android:name=".MainActivity"
+        <activity 
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,7 +17,8 @@
             </intent-filter>
         </activity>
 
-        <!-- OverlayService satırını buradan sildik! -->
+        <service android:name=".OverlayService" />
 
     </application>
+
 </manifest>
