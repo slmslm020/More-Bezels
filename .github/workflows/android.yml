@@ -20,19 +20,19 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Hiçbir karmaşık komut kullanmadan, tek satırda temizce dosyaları oluşturuyoruz
+    # Semicolon (noktalı virgül) olmadan, tertemiz alt alta dosyaları oluşturuyoruz
     - name: Eksik Proje Dosyalarını Otomatik Hazırla
       run: |
         if [ ! -f settings.gradle ]; then
-          echo 'pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }; dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }; rootProject.name = "More-Bezels"; include(":app")' > settings.gradle
+          printf "pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = \"More-Bezels\"\ninclude(\":app\")\n" > settings.gradle
         fi
 
         if [ ! -f build.gradle ]; then
-          echo 'plugins { id("com.android.application") version "8.5.0" apply false; id("org.jetbrains.kotlin.android") version "1.9.22" apply false }' > build.gradle
+          printf "plugins {\n    id(\"com.android.application\") version \"8.5.0\" apply false\n    id(\"org.jetbrains.kotlin.android\") version \"1.9.22\" apply false\n}\n" > build.gradle
         fi
 
         if [ ! -f gradle.properties ]; then
-          echo -e 'android.useAndroidX=true\nandroid.nonTransitiveRClass=true\nkotlin.code.style=official' > gradle.properties
+          printf "android.useAndroidX=true\nandroid.nonTransitiveRClass=true\nkotlin.code.style=official\n" > gradle.properties
         fi
 
     - name: Gradle Wrapper Oluştur
