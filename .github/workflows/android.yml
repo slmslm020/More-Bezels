@@ -20,10 +20,24 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Karmaşık hiçbir şey yok; doğrudan sistemdeki hazır dosyalarla derlemeyi başlatıyoruz
-    - name: Gradle Çalıştırma İzni Ver
-      run: chmod +x gradlew
+    # 1. ADIM: Hiçbir ayar dosyası oluşturmadan ÖNCE temizce motoru kuruyoruz.
+    # Böylece projedeki kod hataları wrapper kurulumunu kesinlikle engelleyemez!
+    - name: Temiz Gradle Motorunu Kur (Wrapper)
+      run: |
+        gradle wrapper --gradle-version 8.5
+        chmod +x gradlew
 
+    # 2. ADIM: Motor kurulduktan sonra gerekli ayar dosyalarını oluşturuyoruz
+    - name: Temel Ayar Dosyalarını Oluştur
+      run: |
+        printf "pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = \"More-Bezels\"\ninclude(\":app\")\n" > settings.gradle
+        
+        printf "plugins {\n    id(\"com.android.application\") version \"8.5.0\" apply false\n    id(\"org.jetbrains.kotlin.android\") version \"1.9.22\" apply false\n}\n" > build.gradle
+
+        echo "android.useAndroidX=true" > gradle.properties
+        echo "android.nonTransitiveRClass=true" >> gradle.properties
+
+    # 3. ADIM: Artık her şey hazır, tertemiz derlemeyi başlatıyoruz
     - name: APK Derle (Build)
       run: ./gradlew assembleDebug --stacktrace
 
