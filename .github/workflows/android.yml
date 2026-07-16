@@ -20,45 +20,19 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Eksik olan tüm kök yapılandırma dosyalarını otomatik oluşturuyoruz
+    # Hiçbir karmaşık komut kullanmadan, tek satırda temizce dosyaları oluşturuyoruz
     - name: Eksik Proje Dosyalarını Otomatik Hazırla
       run: |
         if [ ! -f settings.gradle ]; then
-          cat << 'EOF' > settings.gradle
-          pluginManagement {
-              repositories {
-                  google()
-                  mavenCentral()
-                  gradlePluginPortal()
-              }
-          }
-          dependencyResolutionManagement {
-              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-              repositories {
-                  google()
-                  mavenCentral()
-              }
-          }
-          rootProject.name = "More-Bezels"
-          include(":app")
-          EOF
+          echo 'pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }; dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }; rootProject.name = "More-Bezels"; include(":app")' > settings.gradle
         fi
 
         if [ ! -f build.gradle ]; then
-          cat << 'EOF' > build.gradle
-          plugins {
-              id("com.android.application") version "8.5.0" apply false
-              id("org.jetbrains.kotlin.android") version "1.9.22" apply false
-          }
-          EOF
+          echo 'plugins { id("com.android.application") version "8.5.0" apply false; id("org.jetbrains.kotlin.android") version "1.9.22" apply false }' > build.gradle
         fi
 
         if [ ! -f gradle.properties ]; then
-          cat << 'EOF' > gradle.properties
-          android.useAndroidX=true
-          android.nonTransitiveRClass=true
-          kotlin.code.style=official
-          EOF
+          echo -e 'android.useAndroidX=true\nandroid.nonTransitiveRClass=true\nkotlin.code.style=official' > gradle.properties
         fi
 
     - name: Gradle Wrapper Oluştur
