@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overlay Çerçeve Ayarları"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ===================== ÇERÇEVE KALINLIĞI ===================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Çerçeve Kalınlığı"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderStroke"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="1"
+            android:valueTo="30"
+            android:value="6"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/tvStrokeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6 dp"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginBottom="20dp" />
+
+        <!-- ===================== CORNER RADIUS ===================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Köşe Yuvarlaklığı (Corner Radius)"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="80"
+            android:value="16"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/tvRadiusValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16 dp"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- ===================== RENK SEÇİCİ ===================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Çerçeve Rengi"
+            android:textColor="#B0B0B0"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/colorPaletteContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start" />
+
+        <!-- Seçili renk önizlemesi -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seçili renk:"
+                android:textColor="#B0B0B0"
+                android:textSize="13sp"
+                android:layout_marginEnd="10dp" />
+
+            <View
+                android:id="@+id/selectedColorPreview"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/color_swatch_background" />
+        </LinearLayout>
+
+        <!-- ===================== BAŞLAT / DURDUR ===================== -->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnToggleOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overlay'i Başlat"
+            android:textSize="16sp"
+            android:padding="14dp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- ===================== İZİNLER ===================== -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gerekli İzinler"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+            android:id="@+id/rowOverlayPermission"
+            style="@style/PermissionRowStyle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Diğer Uygulamaların Üzerinde Görüntüleme"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/ivOverlayStatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@android:drawable/presence_offline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnOverlayPermission"
+                style="@style/PermissionButtonStyle"
+                android:text="Ayarla" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rowAccessibility"
+            style="@style/PermissionRowStyle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Erişilebilirlik İzni"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/ivAccessibilityStatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@android:drawable/presence_offline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAccessibility"
+                style="@style/PermissionButtonStyle"
+                android:text="Ayarla" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rowAutostart"
+            style="@style/PermissionRowStyle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Otomatik Başlatma (Autostart)"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAutostart"
+                style="@style/PermissionButtonStyle"
+                android:text="Ayarla" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rowBattery"
+            style="@style/PermissionRowStyle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pil Optimizasyonu Muafiyeti"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/ivBatteryStatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@android:drawable/presence_offline" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnBattery"
+                style="@style/PermissionButtonStyle"
+                android:text="Ayarla" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="11sp"
+            android:textColor="#888888"
+            android:text="Not: Bu ayar üretici bazlı değişir (Xiaomi, Huawei, Oppo vb.), her cihazda garanti edilemez." />
+
+    </LinearLayout>
+</ScrollView>
