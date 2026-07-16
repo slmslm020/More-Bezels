@@ -1,0 +1,51 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    namespace = "com.example.morebezels"
+    compileSdk = 35 // Android 15/16 desteği için yükseltildi
+
+    defaultConfig {
+        applicationId = "com.example.morebezels"
+        minSdk = 26
+        targetSdk = 35 // En güncel sistem standartları için yükseltildi
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    // Claude'un renk paleti için istediği FlexboxLayout kütüphanesi
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+
+    // Temel Android ve Kotlin kütüphaneleri
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Arka plan servisleri ve asenkron işlemler için yardımcılar
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-service:2.7.0")
+}
