@@ -20,29 +20,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Semicolon (noktalı virgül) olmadan, tertemiz alt alta dosyaları oluşturuyoruz
-    - name: Eksik Proje Dosyalarını Otomatik Hazırla
+    # Tüm Android projelerinde olması gereken standart hazır Gradle motorunu indirip kuruyoruz
+    - name: Hazır Gradle Motorunu Kur
       run: |
-        if [ ! -f settings.gradle ]; then
-          printf "pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = \"More-Bezels\"\ninclude(\":app\")\n" > settings.gradle
-        fi
-
-        if [ ! -f build.gradle ]; then
-          printf "plugins {\n    id(\"com.android.application\") version \"8.5.0\" apply false\n    id(\"org.jetbrains.kotlin.android\") version \"1.9.22\" apply false\n}\n" > build.gradle
-        fi
-
-        if [ ! -f gradle.properties ]; then
-          printf "android.useAndroidX=true\nandroid.nonTransitiveRClass=true\nkotlin.code.style=official\n" > gradle.properties
-        fi
-
-    - name: Gradle Wrapper Oluştur
-      run: gradle wrapper --gradle-version 8.5
-
-    - name: Gradle Çalıştırma İzni Ver
-      run: chmod +x gradlew
+        gradle wrapper --gradle-version 8.5 --distribution-type bin
+        chmod +x gradlew
 
     - name: APK Derle (Build)
-      run: ./gradlew assembleDebug
+      run: ./gradlew assembleDebug --stacktrace
 
     - name: APK Dosyasını Yükle
       uses: actions/upload-artifact@v4
