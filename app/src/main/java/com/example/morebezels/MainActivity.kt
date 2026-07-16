@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,13 +28,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // XML'deki yeni ID'lerle bileşenleri bağlıyoruz
         val btnToggleOverlay = findViewById<MaterialButton>(R.id.btnToggleOverlay)
         val btnOverlayPermission = findViewById<MaterialButton>(R.id.btnOverlayPermission)
-        val sliderStroke = findViewById<Slider>(R.id.sliderStroke)
-        val sliderRadius = findViewById<Slider>(R.id.sliderRadius)
 
-        // İzin isteme butonu tetikleyicisi
         btnOverlayPermission.setOnClickListener {
             if (!Settings.canDrawOverlays(this)) {
                 val intent = Intent(
@@ -48,25 +43,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Başlat/Durdur butonu (OverlayService şimdilik kapalı olduğundan sadece bildirim verir)
         btnToggleOverlay.setOnClickListener {
             if (!Settings.canDrawOverlays(this)) {
-                Toast.makeText(this, "Lütfen önce ekran üzerinde çizim izni verin!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Lütfen önce izin verin!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Servis şimdilik devre dışı (Hata çözülüyor).", Toast.LENGTH_SHORT).show()
+                // Servisi çağırıyoruz
+                val intent = Intent(this, OverlayService::class.java)
+                startService(intent)
+                Toast.makeText(this, "Servis başlatıldı!", Toast.LENGTH_SHORT).show()
             }
         }
 
         updatePermissionStatuses()
     }
 
-    // İzin durumlarına göre yeşil/kırmızı simgeleri günceller
     private fun updatePermissionStatuses() {
         val ivOverlayStatus = findViewById<ImageView>(R.id.ivOverlayStatus)
         if (Settings.canDrawOverlays(this)) {
-            ivOverlayStatus.setImageResource(android.R.drawable.presence_online) // Yeşil simge
+            ivOverlayStatus.setImageResource(android.R.drawable.presence_online)
         } else {
-            ivOverlayStatus.setImageResource(android.R.drawable.presence_offline) // Kırmızı simge
+            ivOverlayStatus.setImageResource(android.R.drawable.presence_offline)
         }
     }
 }
