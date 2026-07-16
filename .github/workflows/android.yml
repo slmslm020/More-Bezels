@@ -20,20 +20,9 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Senin app/build.gradle dosyanla birebir uyumlu Kotlin DSL ayar dosyalarını oluşturuyoruz
-    - name: Temel Ayar Dosyalarını Oluştur
-      run: |
-        printf "pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = \"More-Bezels\"\ninclude(\":app\")\n" > settings.gradle
-        
-        printf "plugins {\n    id(\"com.android.application\") version \"8.5.0\" apply false\n    id(\"org.jetbrains.kotlin.android\") version \"1.9.22\" apply false\n}\n" > build.gradle
-
-        echo "android.useAndroidX=true" > gradle.properties
-        echo "android.nonTransitiveRClass=true" >> gradle.properties
-
-    - name: Gradle Motorunu Kur (Wrapper)
-      run: |
-        gradle wrapper --gradle-version 8.5
-        chmod +x gradlew
+    # Karmaşık hiçbir şey yok; doğrudan sistemdeki hazır dosyalarla derlemeyi başlatıyoruz
+    - name: Gradle Çalıştırma İzni Ver
+      run: chmod +x gradlew
 
     - name: APK Derle (Build)
       run: ./gradlew assembleDebug --stacktrace
