@@ -20,14 +20,9 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # Dosyalar artık depoda hazır olduğu için wrapper doğrudan sorunsuz kurulacak!
-    - name: Gradle Motorunu Kur (Wrapper)
-      run: |
-        gradle wrapper --gradle-version 8.5
-        chmod +x gradlew
-
+    # Wrapper oluşturma saçmalığını tamamen geçiyoruz, doğrudan gradle ile derliyoruz!
     - name: APK Derle (Build)
-      run: ./gradlew assembleDebug --stacktrace
+      run: gradle assembleDebug --stacktrace
 
     - name: APK Dosyasını Yükle
       uses: actions/upload-artifact@v4
